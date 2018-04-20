@@ -1,5 +1,3 @@
-// src/controller.ts
-// src/pages/controller.ts
 import { JsonController, Get, Post, HttpCode, Body} from 'routing-controllers'
 import Games from './entity'
 
