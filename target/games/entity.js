@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const BaseEntity_1 = require("typeorm/repository/BaseEntity");
-const class_validator_1 = require("class-validator");
 let Games = class Games extends BaseEntity_1.BaseEntity {
 };
 __decorate([
@@ -19,18 +18,15 @@ __decorate([
     __metadata("design:type", Number)
 ], Games.prototype, "id", void 0);
 __decorate([
-    class_validator_1.IsString(),
     typeorm_1.Column('text'),
     __metadata("design:type", String)
 ], Games.prototype, "name", void 0);
 __decorate([
-    class_validator_1.IsString(),
     typeorm_1.Column('text'),
     __metadata("design:type", String)
 ], Games.prototype, "color", void 0);
 __decorate([
-    class_validator_1.IsJSON(),
-    typeorm_1.Column('json'),
+    typeorm_1.Column('json', { nullable: true }),
     __metadata("design:type", Array)
 ], Games.prototype, "board", void 0);
 Games = __decorate([
