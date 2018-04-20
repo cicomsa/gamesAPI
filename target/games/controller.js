@@ -15,6 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
 exports.color = ["red", "yellow", "blue", "green", "magenta"];
+const defaultBoard = [
+    ['o', 'o', 'o'],
+    ['o', 'o', 'o'],
+    ['o', 'o', 'o']
+];
 let Controller = class Controller {
     async allPages() {
         const games = await entity_1.default.find();
@@ -22,6 +27,7 @@ let Controller = class Controller {
     }
     createGame(game) {
         game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
+        game.board = defaultBoard;
         return game.save();
     }
     async updateGame(id, update) {

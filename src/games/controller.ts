@@ -2,6 +2,12 @@ import { JsonController, Get, Post, HttpCode, Body, Put, Param, NotFoundError} f
 import Games from './entity'
 
 export const color = ["red", "yellow", "blue", "green", "magenta"]
+const defaultBoard = [
+	['o', 'o', 'o'],
+	['o', 'o', 'o'],
+	['o', 'o', 'o']
+]
+
 
 @JsonController()
 export default class Controller {
@@ -17,7 +23,9 @@ export default class Controller {
   createGame(
   @Body() game: Games
   ) {
+  
   game.color = color[Math.floor(Math.random() * color.length)]
+  game.board = defaultBoard
   return game.save()
   }
 

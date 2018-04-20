@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 import { BaseEntity } from 'typeorm/repository/BaseEntity'
-import { Contains } from 'class-validator';
+import { Contains, ValidateIf } from 'class-validator';
 
 @Entity({name: "games"})
 export default class Games extends BaseEntity {
@@ -11,11 +11,13 @@ export default class Games extends BaseEntity {
   @Column('text')
   name: string
 
-  @Contains("red" || "blue" || "yellow" || "magenta" || "green")
+  
+  @ValidateIf(o => o.color ==="yellow" || o.color==="red" || o.color==="blue" || o.color==="magenta" || o.color==="green")
+  @Contains("yellow" || "red" || "blue" || "magenta" || "green")
   @Column('text')
   color: string
-
+  
 
   @Column('json', {nullable: true})
-  board: string[]
+  board: string[][]
 }

@@ -23,7 +23,8 @@ __decorate([
     __metadata("design:type", String)
 ], Games.prototype, "name", void 0);
 __decorate([
-    class_validator_1.Contains("red" || "blue" || "yellow" || "magenta" || "green"),
+    class_validator_1.ValidateIf(o => o.color === "yellow" || o.color === "red" || o.color === "blue" || o.color === "magenta" || o.color === "green"),
+    class_validator_1.Contains("yellow" || "red" || "blue" || "magenta" || "green"),
     typeorm_1.Column('text'),
     __metadata("design:type", String)
 ], Games.prototype, "color", void 0);
