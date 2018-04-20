@@ -14,21 +14,21 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
+exports.color = ["red", "yellow", "blue", "green", "magenta"];
 let Controller = class Controller {
     async allPages() {
         const games = await entity_1.default.find();
         return { games };
     }
     createGame(game) {
-        const color = ["red", "yellow", "blue", "green", "magenta"];
-        game.color = color[Math.floor(Math.random() * color.length)];
-        console.log(game.color);
+        game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
         return game.save();
     }
     async updateGame(id, update) {
         const game = await entity_1.default.findOne(id);
         if (!game)
             throw new routing_controllers_1.NotFoundError('Cannot find page');
+        game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
         return entity_1.default.merge(game, update).save();
     }
 };
