@@ -3,13 +3,14 @@ const defaultBoard = [
     ["o", "o", "o"],
     ["o", "o", "o"]]
   
-const result = defaultBoard.reduce((r, e) => (r.push(...e), r), [])
+let result = defaultBoard.reduce((r, e) => (r.push(...e), r), [])
+console.log(result)
+let index = Math.floor((Math.random() * result.length-1) + 1)
+let spliced = result.splice(index,1,"board")
+  
 
-let spliced = result.splice(3,1,"board")
-  //console.log(result)
-
-export let newArr = [];
+let newArr = [];
 while(result.length) newArr.push(result.splice(0,3));
 
-console.log(newArr)
+//console.log(newArr)
 
