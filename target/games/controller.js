@@ -16,10 +16,11 @@ const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
 exports.color = ["red", "yellow", "blue", "green", "magenta"];
 const defaultBoard = [
-    ['o', 'o', 'o'],
-    ['o', 'o', 'o'],
-    ['o', 'o', 'o']
+    ["o", "o", "o"],
+    ["o", "o", "o"],
+    ["o", "o", "o"],
 ];
+let stringifiedBoard = JSON.stringify(defaultBoard);
 let Controller = class Controller {
     async allPages() {
         const games = await entity_1.default.find();
@@ -35,6 +36,7 @@ let Controller = class Controller {
         if (!game)
             throw new routing_controllers_1.NotFoundError('Cannot find page');
         game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
+        console.log(game.board);
         return entity_1.default.merge(game, update).save();
     }
 };

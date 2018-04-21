@@ -3,10 +3,12 @@ import Games from './entity'
 
 export const color = ["red", "yellow", "blue", "green", "magenta"]
 const defaultBoard = [
-	['o', 'o', 'o'],
-	['o', 'o', 'o'],
-	['o', 'o', 'o']
+	["o", "o", "o"],
+	["o", "o", "o"],
+	["o", "o", "o"],
 ]
+
+let stringifiedBoard = JSON.stringify(defaultBoard)
 
 
 @JsonController()
@@ -38,6 +40,10 @@ export default class Controller {
   if (!game) throw new NotFoundError('Cannot find page')
 
   game.color = color[Math.floor(Math.random() * color.length)]
+  //let boardUnit = defaultBoard.map(board =>board.map(board => board))
+  
+  //to add the input inside the array
+  console.log(game.board)
   return Games.merge(game, update).save()
   }
 }
