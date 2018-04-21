@@ -1,16 +1,19 @@
-import { JsonController, Get, Post, HttpCode, Body, Put, Param, NotFoundError} from 'routing-controllers'
+import { JsonController, Get, Post, HttpCode, Body, Put, Param, NotFoundError, Patch} from 'routing-controllers'
 import Games from './entity'
+import {newArr} from './hg'
 
 export const color = ["red", "yellow", "blue", "green", "magenta"]
-
 const defaultBoard = [
 	["o", "o", "o"],
 	["o", "o", "o"],
-	["o", "o", "o"],
+  ["o", "o", "o"]
 ]
 
 let stringifiedBoard = JSON.stringify(defaultBoard)
 let jsonBoard = JSON.parse(stringifiedBoard)
+
+let stringifiedNewArray = JSON.stringify(newArr)
+let jsonNewArray = JSON.parse(stringifiedNewArray)
 
 @JsonController()
 export default class Controller {
@@ -37,13 +40,15 @@ export default class Controller {
   @Body() update: Partial<Games>
   ) {
   const game = await Games.findOne(id)
-
   if (!game) throw new NotFoundError('Cannot find game')
+
   game.color = color[Math.floor(Math.random() * color.length)]
-  //let boardUnit = defaultBoard.map(board =>board.map(board => board))
-  
-  //to add the input inside the array
-  console.log(game.color)
+  game.board = jsonNewArray
+
   return Games.merge(game, update).save()
   }
+ 
 }
+
+
+

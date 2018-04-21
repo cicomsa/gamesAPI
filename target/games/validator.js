@@ -12,11 +12,11 @@ let ColorValidator = class ColorValidator {
         return text === "red" || text === "yellow" || text === "blue" || text === "magenta" || text === "green";
     }
     defaultMessage() {
-        return "Color ($value) not available!";
+        return `Color not available!`;
     }
 };
 ColorValidator = __decorate([
-    class_validator_1.ValidatorConstraint({ name: "randomColor", async: false })
+    class_validator_1.ValidatorConstraint({ name: "randomColor", async: true })
 ], ColorValidator);
 exports.ColorValidator = ColorValidator;
 //# sourceMappingURL=validator.js.map

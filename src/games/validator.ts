@@ -1,6 +1,6 @@
 import {ValidatorConstraint, ValidatorConstraintInterface} from "class-validator";
 
-@ValidatorConstraint({ name: "randomColor", async: false })
+@ValidatorConstraint({ name: "randomColor", async: true })
 export class ColorValidator implements ValidatorConstraintInterface {
 
     validate(text: string,) {
@@ -8,6 +8,6 @@ export class ColorValidator implements ValidatorConstraintInterface {
     }
 
     defaultMessage() { // here you can provide default error message if validation failed
-        return "Color ($value) not available!";
+        return `Color not available!`;
     }
 }

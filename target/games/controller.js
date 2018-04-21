@@ -14,14 +14,17 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
+const hg_1 = require("./hg");
 exports.color = ["red", "yellow", "blue", "green", "magenta"];
 const defaultBoard = [
     ["o", "o", "o"],
     ["o", "o", "o"],
-    ["o", "o", "o"],
+    ["o", "o", "o"]
 ];
 let stringifiedBoard = JSON.stringify(defaultBoard);
 let jsonBoard = JSON.parse(stringifiedBoard);
+let stringifiedNewArray = JSON.stringify(hg_1.newArr);
+let jsonNewArray = JSON.parse(stringifiedNewArray);
 let Controller = class Controller {
     async allPages() {
         const games = await entity_1.default.find();
@@ -37,7 +40,7 @@ let Controller = class Controller {
         if (!game)
             throw new routing_controllers_1.NotFoundError('Cannot find game');
         game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
-        console.log(game.color);
+        game.board = jsonNewArray;
         return entity_1.default.merge(game, update).save();
     }
 };
