@@ -2,6 +2,7 @@ import { JsonController, Get, Post, HttpCode, Body, Put, Param, NotFoundError} f
 import Games from './entity'
 
 export const color = ["red", "yellow", "blue", "green", "magenta"]
+
 const defaultBoard = [
 	["o", "o", "o"],
 	["o", "o", "o"],
@@ -9,7 +10,7 @@ const defaultBoard = [
 ]
 
 let stringifiedBoard = JSON.stringify(defaultBoard)
-
+let jsonBoard = JSON.parse(stringifiedBoard)
 
 @JsonController()
 export default class Controller {
@@ -25,9 +26,8 @@ export default class Controller {
   createGame(
   @Body() game: Games
   ) {
-  
+  game.board = jsonBoard
   game.color = color[Math.floor(Math.random() * color.length)]
-  game.board = defaultBoard
   return game.save()
   }
 
@@ -37,13 +37,13 @@ export default class Controller {
   @Body() update: Partial<Games>
   ) {
   const game = await Games.findOne(id)
-  if (!game) throw new NotFoundError('Cannot find page')
 
+  if (!game) throw new NotFoundError('Cannot find game')
   game.color = color[Math.floor(Math.random() * color.length)]
   //let boardUnit = defaultBoard.map(board =>board.map(board => board))
   
   //to add the input inside the array
-  console.log(game.board)
+  console.log(game.color)
   return Games.merge(game, update).save()
   }
 }

@@ -21,22 +21,23 @@ const defaultBoard = [
     ["o", "o", "o"],
 ];
 let stringifiedBoard = JSON.stringify(defaultBoard);
+let jsonBoard = JSON.parse(stringifiedBoard);
 let Controller = class Controller {
     async allPages() {
         const games = await entity_1.default.find();
         return { games };
     }
     createGame(game) {
+        game.board = jsonBoard;
         game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
-        game.board = defaultBoard;
         return game.save();
     }
     async updateGame(id, update) {
         const game = await entity_1.default.findOne(id);
         if (!game)
-            throw new routing_controllers_1.NotFoundError('Cannot find page');
+            throw new routing_controllers_1.NotFoundError('Cannot find game');
         game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
-        console.log(game.board);
+        console.log(game.color);
         return entity_1.default.merge(game, update).save();
     }
 };
