@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 import { BaseEntity } from 'typeorm/repository/BaseEntity'
 //import { Validate, Contains} from 'class-validator';
-//import { ColorValidator } from './validator';
+//import { ColorValidator } from './colorValidator';
 
 
 @Entity({name: "games"})

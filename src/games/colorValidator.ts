@@ -8,6 +8,6 @@ export class ColorValidator implements ValidatorConstraintInterface {
     }
 
     defaultMessage() { // here you can provide default error message if validation failed
-        return `Color not available!`;
+        return `Only red, blue, green, magenta and yellow as color, please!`;
     }
 }

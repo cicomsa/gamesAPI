@@ -20,39 +20,31 @@ const defaultBoard = [
     ["o", "o", "o"],
     ["o", "o", "o"]
 ];
-let stringifiedBoard = JSON.stringify(defaultBoard);
-console.log(stringifiedBoard);
-let jsonBoard = JSON.parse(stringifiedBoard);
 let Controller = class Controller {
-    async allPages() {
+    async allGames() {
         const games = await entity_1.default.find();
         return { games };
     }
     createGame(game) {
-        game.board = jsonBoard;
+        game.board = defaultBoard;
         game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
-        console.log(typeof game.board);
         return game.save();
     }
-    async updateGame(id, toUpdate) {
-        const newGame = await entity_1.default.findOne(id);
-        if (!newGame)
+    async updateGameBoard(id, update) {
+        const game = await entity_1.default.findOne(id);
+        if (!game)
             throw new routing_controllers_1.NotFoundError('Cannot find game');
-        newGame.color = exports.color[Math.floor(Math.random() * exports.color.length)];
-        const stringGame = JSON.stringify(newGame.board);
-        let split = stringGame.split("");
-        let result = split.filter(function (a) { return a !== '[' && a !== ']' && a !== '"' && a !== ',' && a !== "'" && a !== "\"" && a !== "\\"; });
-        console.log(result);
-        console.log(result.length);
-        const index = Number(Math.floor((Math.random() * result.length - 1) + 1));
-        result.splice(index, 1, JSON.stringify(toUpdate.board));
-        let newArr = [];
-        while (result.length)
-            newArr.push(result.splice(0, 3));
-        const stringifiedNewArray = JSON.stringify(newArr);
-        let parsedBoard = JSON.parse(stringifiedNewArray);
-        newGame.board = parsedBoard;
-        return newGame.save();
+        game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
+        const newBoard = [];
+        const board = JSON.stringify(game.board);
+        const splitedBoard = board.split("");
+        const stringBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",");
+        const index = Math.floor((Math.random() * stringBoard.length - 1) + 1);
+        stringBoard.splice(index, 1, update.board);
+        while (stringBoard.length)
+            newBoard.push(stringBoard.splice(0, 3));
+        game.board = newBoard;
+        return game.save();
     }
 };
 __decorate([
@@ -60,7 +52,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], Controller.prototype, "allPages", null);
+], Controller.prototype, "allGames", null);
 __decorate([
     routing_controllers_1.Post('/games'),
     routing_controllers_1.HttpCode(201),
@@ -76,7 +68,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
-], Controller.prototype, "updateGame", null);
+], Controller.prototype, "updateGameBoard", null);
 Controller = __decorate([
     routing_controllers_1.JsonController()
 ], Controller);

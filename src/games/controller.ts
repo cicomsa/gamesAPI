@@ -16,7 +16,7 @@ export default class Controller {
 
 
   @Get('/games')
-  async allPages() {
+  async allGames() {
   const games = await Games.find()
   return { games }
   }
@@ -56,14 +56,14 @@ export default class Controller {
 
   game.color = color[Math.floor(Math.random() * color.length)]
    
-  const newArr : string[] = []
+  const newBoard : string[] = []
   const board = JSON.stringify(game.board)
   const splitedBoard = board.split("")
   const stringBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",")
   const index = Math.floor((Math.random() * stringBoard.length-1) + 1)
   stringBoard.splice(index, 1, update.board)
-  while(stringBoard.length) newArr.push(stringBoard.splice(0,3))
-  game.board = newArr
+  while(stringBoard.length) newBoard.push(stringBoard.splice(0,3))
+  game.board = newBoard
 
   return game.save()
   }
