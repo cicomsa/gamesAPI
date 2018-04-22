@@ -1,5 +1,6 @@
 import { JsonController, Get, Post, HttpCode, Body, Put, Param, NotFoundError, Patch} from 'routing-controllers'
 import Games from './entity'
+import { IsJSON } from 'class-validator';
 
 
 export const color = ["red", "yellow", "blue", "green", "magenta"]
@@ -10,6 +11,7 @@ const defaultBoard = [
 ]
 
 let stringifiedBoard = JSON.stringify(defaultBoard)
+console.log(stringifiedBoard)
 let jsonBoard = JSON.parse(stringifiedBoard)
 
 @JsonController()
@@ -29,47 +31,66 @@ export default class Controller {
   ) {
   game.board = jsonBoard
   game.color = color[Math.floor(Math.random() * color.length)]
+  console.log(typeof game.board)
   return game.save()
   }
 
   @Put('/games/:id')
   async updateGame(
   @Param('id') id: number,
-  @Body() update: Partial<Games>
+  @Body() toUpdate: Partial<Games>
   ) {
-  const game = await Games.findOne(id)
-  if (!game) throw new NotFoundError('Cannot find game')
+  const newGame = await Games.findOne(id)
+  if (!newGame) throw new NotFoundError('Cannot find game')
+  newGame.color = color[Math.floor(Math.random() * color.length)]
 
-  game.color = color[Math.floor(Math.random() * color.length)]
-
-  const defaultBoard = [
-    ["o", "o", "o"],
-    ["o", "o", "o"],
-    ["o", "o", "o"]
-  ]
-  
-  const result = defaultBoard.reduce((r, e) => (r.push(...e), r), [])
-
-  const index = Math.floor((Math.random() * result.length-1) + 1)
-  result.splice(index,1,"board")
+    const stringGame = JSON.stringify(newGame.board)
+    let split = stringGame.split("")
+    //console.log(split)
+    let result = split.filter(function(a){return a !== '[' && a!==']' && a!=='"' && a!==',' && a!=="'"  && a!=="\"" && a!=="\\")
+   
+    console.log(result)
+    console.log(result.length)
+    const index = Number(Math.floor((Math.random() * result.length-1) + 1))
+    result.splice(index,1,JSON.stringify(toUpdate.board))
     //console.log(result)
+    let newArr = []
+    while(result.length) newArr.push(result.splice(0,3))
+    //console.log(newArr)
+    const stringifiedNewArray = JSON.stringify(newArr)
+    //console.log(stringifiedNewArray)
+   //let result = stringGame.replace(stringGame.charAt[5], JSON.stringify(toUpdate.board))
+   //console.log(result)
 
-  let newArr : string[] = [];
-  while(result.length) newArr.push(result.splice(0,3));
+    let parsedBoard=JSON.parse(stringifiedNewArray)
+    newGame.board=parsedBoard
+    console.log(parsedBoard)
 
   
+    //const result = toUpdate.board.reduce((r, e) => (r.push(...e), r), [])
 
-  const stringifiedNewArray = JSON.stringify(newArr)
-  const jsonNewArray = JSON.parse(stringifiedNewArray)
-
-  game.board = jsonNewArray
-
-    console.log( result)
-
-  return Games.merge(game, update).save()
+  return newGame.save()
   }
  
 }
 
 
+// const defaultBoard : string[][] =  [
+//   ["o", "o", "o"],
+//   ["o", "o", "o"],
+//   ["o", "o", "o"]
+// ]
+// let newArr : string[] = [];
 
+// const result = defaultBoard.reduce((r, e) => (r.push(...e), r), [])
+// const index = Math.floor((Math.random() * result.length-1) + 1)
+// result.splice(index,1,"board")
+
+// //result.length error 
+// while(result.length) newArr.push(result.splice(0,3))
+// console.log(typeof result.length)
+
+// const stringifiedNewArray = JSON.stringify(newArr)
+// const jsonNewArray = JSON.parse(stringifiedNewArray)
+
+// game.board = jsonNewArray

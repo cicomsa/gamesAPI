@@ -21,6 +21,7 @@ const defaultBoard = [
     ["o", "o", "o"]
 ];
 let stringifiedBoard = JSON.stringify(defaultBoard);
+console.log(stringifiedBoard);
 let jsonBoard = JSON.parse(stringifiedBoard);
 let Controller = class Controller {
     async allPages() {
@@ -30,29 +31,29 @@ let Controller = class Controller {
     createGame(game) {
         game.board = jsonBoard;
         game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
+        console.log(typeof game.board);
         return game.save();
     }
-    async updateGame(id, update) {
-        const game = await entity_1.default.findOne(id);
-        if (!game)
+    async updateGame(id, toUpdate) {
+        const newGame = await entity_1.default.findOne(id);
+        if (!newGame)
             throw new routing_controllers_1.NotFoundError('Cannot find game');
-        game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
-        const defaultBoard = [
-            ["o", "o", "o"],
-            ["o", "o", "o"],
-            ["o", "o", "o"]
-        ];
-        const result = defaultBoard.reduce((r, e) => (r.push(...e), r), []);
-        const index = Math.floor((Math.random() * result.length - 1) + 1);
-        result.splice(index, 1, "board");
+        newGame.color = exports.color[Math.floor(Math.random() * exports.color.length)];
+        const stringGame = JSON.stringify(newGame.board);
+        let split = stringGame.split("");
+        let result = split.filter(function (a) { return a !== '[' && a !== ']' && a !== '"' && a !== ',' && a !== "'" && a !== "\"" && a !== "\\"; });
+        console.log(result);
+        console.log(result.length);
+        const index = Number(Math.floor((Math.random() * result.length - 1) + 1));
+        result.splice(index, 1, JSON.stringify(toUpdate.board));
         let newArr = [];
         while (result.length)
             newArr.push(result.splice(0, 3));
         const stringifiedNewArray = JSON.stringify(newArr);
-        const jsonNewArray = JSON.parse(stringifiedNewArray);
-        game.board = jsonNewArray;
-        console.log(result);
-        return entity_1.default.merge(game, update).save();
+        let parsedBoard = JSON.parse(stringifiedNewArray);
+        newGame.board = parsedBoard;
+        console.log(parsedBoard);
+        return newGame.save();
     }
 };
 __decorate([
