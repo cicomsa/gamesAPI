@@ -34,7 +34,6 @@ let Controller = class Controller {
         const game = await entity_1.default.findOne(id);
         if (!game)
             throw new routing_controllers_1.NotFoundError('Cannot find game');
-        game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
         const newBoard = [];
         const board = JSON.stringify(game.board);
         const splitedBoard = board.split("");
@@ -43,7 +42,15 @@ let Controller = class Controller {
         stringBoard.splice(index, 1, update.board);
         while (stringBoard.length)
             newBoard.push(stringBoard.splice(0, 3));
-        game.board = newBoard;
+        if (update.board)
+            game.board = newBoard;
+        if (update.name)
+            game.name = update.name;
+        game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
+        if (update.color)
+            game.color = update.color;
+        if (game.color !== "red" && game.color !== "green" && game.color !== "yellow" && game.color !== "magenta" && game.color !== "blue")
+            throw new routing_controllers_1.BadRequestError('Color: "red", "blue", "green", "yellow" or "magenta" only!');
         return game.save();
     }
 };

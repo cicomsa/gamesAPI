@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const class_validator_1 = require("class-validator");
 let ColorValidator = class ColorValidator {
     validate(text) {
-        return text === "red" || text === "yellow" || text === "blue" || text === "magenta" || text === "green";
+        return text === "brown";
     }
     defaultMessage() {
         return `Only red, blue, green, magenta and yellow as color, please!`;
