@@ -42,15 +42,23 @@ export default class Controller {
   const game = await Games.findOne(id)
   if (!game) throw new NotFoundError('Cannot find game')
 
-  
-  
   const newBoard : string[] = []
-  const board = JSON.stringify(game.board)
-  const splitedBoard = board.split("")
-  const stringBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",")
-  const index = Math.floor((Math.random() * stringBoard.length-1) + 1)
-  stringBoard.splice(index, 1, update.board)
-  while(stringBoard.length) newBoard.push(stringBoard.splice(0,3))
+  const oldBoard : string[] = []
+  
+
+  const stringBoard = JSON.stringify(game.board)
+  const splitedBoard = stringBoard.split("")
+  const arrayBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",")
+  const arrayToOldBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",")
+ 
+  while(arrayToOldBoard.length) oldBoard.push(arrayToOldBoard.splice(0,3))
+  console.log(arrayBoard)
+  const index = Math.floor((Math.random() * arrayBoard.length-1) + 1)
+  arrayBoard.splice(index, 1, update.board)
+  while(arrayBoard.length) newBoard.push(arrayBoard.splice(0,3))
+  
+  console.log(newBoard)
+  console.log(oldBoard)
   
   if (update.board) game.board = newBoard
   if (update.name) game.name=update.name
@@ -62,7 +70,6 @@ export default class Controller {
 
   return game.save()
   }
- 
 }
 
 
