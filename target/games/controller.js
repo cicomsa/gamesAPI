@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const routing_controllers_1 = require("routing-controllers");
 const entity_1 = require("./entity");
-exports.color = ["red", "yellow", "blue", "green", "magenta"];
+const color = ["red", "yellow", "blue", "green", "magenta"];
 const defaultBoard = [
     ["o", "o", "o"],
     ["o", "o", "o"],
@@ -27,7 +27,7 @@ let Controller = class Controller {
     }
     createGame(game) {
         game.board = defaultBoard;
-        game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
+        game.color = color[Math.floor(Math.random() * color.length)];
         return game.save();
     }
     async updateGameBoard(id, update) {
@@ -45,18 +45,18 @@ let Controller = class Controller {
         const arrayToOldBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",");
         while (arrayToOldBoard.length)
             oldBoard.push(arrayToOldBoard.splice(0, 3));
-        const arrayBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",");
-        const index = Math.floor((Math.random() * arrayBoard.length - 1) + 1);
-        arrayBoard.splice(index, 1, update.board);
-        while (arrayBoard.length)
-            newBoard.push(arrayBoard.splice(0, 3));
+        const arrayToNewBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",");
+        const index = Math.floor((Math.random() * arrayToNewBoard.length - 1) + 1);
+        arrayToNewBoard.splice(index, 1, update.board);
+        while (arrayToNewBoard.length)
+            newBoard.push(arrayToNewBoard.splice(0, 3));
         if (update.board)
             game.board = newBoard;
         if (moves(oldBoard, newBoard) !== 1)
             throw new routing_controllers_1.BadRequestError('One move only, please');
         if (update.name)
             game.name = update.name;
-        game.color = exports.color[Math.floor(Math.random() * exports.color.length)];
+        game.color = color[Math.floor(Math.random() * color.length)];
         if (update.color)
             game.color = update.color;
         if (game.color !== "red" && game.color !== "green" && game.color !== "yellow" && game.color !== "magenta" && game.color !== "blue")

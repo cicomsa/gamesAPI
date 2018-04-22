@@ -1,9 +1,7 @@
 import { JsonController, Get, Post, HttpCode, Body, Put, Param, NotFoundError, BadRequestError} from 'routing-controllers'
 import Games from './entity'
 
-
-export const color = ["red", "yellow", "blue", "green", "magenta"]
-
+const color = ["red", "yellow", "blue", "green", "magenta"]
 const defaultBoard = [
 	["o", "o", "o"],
 	["o", "o", "o"],
@@ -12,7 +10,6 @@ const defaultBoard = [
 
 @JsonController()
 export default class Controller {
-
 
   @Get('/games')
   async allGames() {
@@ -43,6 +40,7 @@ export default class Controller {
 
   const newBoard : string[] = []
   const oldBoard : string[] = []
+
   const moves = (board1, board2) => 
     board1
       .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
@@ -55,10 +53,10 @@ export default class Controller {
   const arrayToOldBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",")
   while(arrayToOldBoard.length) oldBoard.push(arrayToOldBoard.splice(0,3))
   
-  const arrayBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",")
-  const index = Math.floor((Math.random() * arrayBoard.length-1) + 1)
-  arrayBoard.splice(index, 1, update.board)
-  while(arrayBoard.length) newBoard.push(arrayBoard.splice(0,3))
+  const arrayToNewBoard = splitedBoard.filter(o => o !== "'" && o !== '"' && o !== "[" && o !== "]" && o !== ",")
+  const index = Math.floor((Math.random() * arrayToNewBoard.length-1) + 1)
+  arrayToNewBoard.splice(index, 1, update.board)
+  while(arrayToNewBoard.length) newBoard.push(arrayToNewBoard.splice(0,3))
     
   if (update.board) game.board = newBoard
   if (moves(oldBoard, newBoard) !== 1) 
