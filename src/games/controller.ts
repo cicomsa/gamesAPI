@@ -59,15 +59,10 @@ export default class Controller {
     //console.log(newArr)
     const stringifiedNewArray = JSON.stringify(newArr)
     //console.log(stringifiedNewArray)
-   //let result = stringGame.replace(stringGame.charAt[5], JSON.stringify(toUpdate.board))
    //console.log(result)
 
     let parsedBoard=JSON.parse(stringifiedNewArray)
     newGame.board=parsedBoard
-    console.log(parsedBoard)
-
-  
-    //const result = toUpdate.board.reduce((r, e) => (r.push(...e), r), [])
 
   return newGame.save()
   }
@@ -75,22 +70,4 @@ export default class Controller {
 }
 
 
-// const defaultBoard : string[][] =  [
-//   ["o", "o", "o"],
-//   ["o", "o", "o"],
-//   ["o", "o", "o"]
-// ]
-// let newArr : string[] = [];
 
-// const result = defaultBoard.reduce((r, e) => (r.push(...e), r), [])
-// const index = Math.floor((Math.random() * result.length-1) + 1)
-// result.splice(index,1,"board")
-
-// //result.length error 
-// while(result.length) newArr.push(result.splice(0,3))
-// console.log(typeof result.length)
-
-// const stringifiedNewArray = JSON.stringify(newArr)
-// const jsonNewArray = JSON.parse(stringifiedNewArray)
-
-// game.board = jsonNewArray

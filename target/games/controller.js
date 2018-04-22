@@ -52,7 +52,6 @@ let Controller = class Controller {
         const stringifiedNewArray = JSON.stringify(newArr);
         let parsedBoard = JSON.parse(stringifiedNewArray);
         newGame.board = parsedBoard;
-        console.log(parsedBoard);
         return newGame.save();
     }
 };
