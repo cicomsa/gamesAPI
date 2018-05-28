@@ -1,5 +1,7 @@
 # gamesAPI
 
+Project in progress...
+
 ## Project description
 
 This project was made as an assignment, through which to showcase my knowledge and understanding in TypeScript and TypeORM.
@@ -25,10 +27,10 @@ Run  the app:
 
 * To add an user:
 
-  http post :<PORT>/games name=<NAME> - . 
+  ```http post :<PORT>/games name=<NAME> - ``` 
   The user will be assigned with a random color and will have the default starting board added to the table.
   
 * To edit user's content:
 
-  http put :<PUT>/games/:id (name-optional) (color-optional) (board-optional)
+  ```http put :<PUT>/games/:id (name-optional) (color-optional) (board-optional)```
   Note: Single characters changes only for the board. Ex: board="x" 
