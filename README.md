@@ -19,7 +19,7 @@ Install the dependencies:
 
 Run  the app:
 
-* Set a ‘DATABASE_URL' environment variable
+* Have set a ‘DATABASE_URL' environment variable
 * Start the TypeScript compiler: tsc -w
 * Connect to Postgres with TypeORM: yarn start
 
