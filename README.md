@@ -32,5 +32,5 @@ Run  the app:
   
 * To edit user's content:
 
-  ```http put :<PUT>/games/:id (name-optional) (color-optional) (board-optional)```
+  ```http put :<PORT>/games/:id (name-optional) (color-optional) (board-optional)```
   Note: Single characters changes only for the board. Ex: board="x" 
